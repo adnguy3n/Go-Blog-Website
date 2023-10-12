@@ -24,6 +24,7 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.50.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
+	golang.org/x/crypto v0.14.0 // indirect
 	golang.org/x/sys v0.13.0 // indirect
 	modernc.org/libc v1.24.1 // indirect
 	modernc.org/mathutil v1.6.0 // indirect

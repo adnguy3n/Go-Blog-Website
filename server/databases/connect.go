@@ -6,19 +6,21 @@ import (
 	"github.com/adnguy3n/Go-Blog-Website/server/models"
 	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 /*
  * Defining the database. Used across the entire app to communicate with the Database.
  */
-var TestDB *gorm.DB
+var DB *gorm.DB
 
 /*
  * Connects to the Database or creates it if it doesn't exist.
- * Currently set to test.db which can be found in the database folder.
  */
-func ConnectTestDatabase() {
-	database, err := gorm.Open(sqlite.Open("database/test.db"), &gorm.Config{})
+func ConnectDatabase() {
+	database, err := gorm.Open(sqlite.Open("database/DB.db"), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Silent),
+	})
 
 	if err != nil {
 		log.Fatal("Failed to connect to database!")
@@ -31,5 +33,5 @@ func ConnectTestDatabase() {
 		log.Fatal(err)
 	}
 
-	TestDB = database
+	DB = database
 }
