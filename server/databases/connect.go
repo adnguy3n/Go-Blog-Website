@@ -1,7 +1,9 @@
 package databases
 
 import (
-	"gorm.io/driver/sqlite"
+	"fmt"
+
+	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
 )
 
@@ -20,6 +22,8 @@ func ConnectTestDatabase() {
 	if err != nil {
 		panic("Failed to connect to database!")
 	}
+
+	fmt.Println("Connection Successful.")
 
 	TestDB = database
 }
