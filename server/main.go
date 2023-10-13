@@ -41,4 +41,8 @@ func startServer() {
  */
 func routes(app *fiber.App) {
 	app.Post("account/register", controller.Register)
+	app.Post("account/login", controller.Login)
+
+	//app.Use(middleware.Authenticate)
+
 }

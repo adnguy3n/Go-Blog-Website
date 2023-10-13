@@ -4,7 +4,9 @@ import (
 	"log"
 	"regexp"
 	"strings"
+	"time"
 
+	"github.com/adnguy3n/Go-Blog-Website/server/authenthication"
 	"github.com/adnguy3n/Go-Blog-Website/server/databases"
 	"github.com/adnguy3n/Go-Blog-Website/server/models"
 	"github.com/gofiber/fiber/v2"
@@ -26,12 +28,12 @@ func validateEmail(email string) bool {
 }
 
 /*
- * Checks if the e-mail address is already in use.
+ * Checks if an account with the e-mail address exists.
  */
-func checkDupeEmail(email string, userData models.Users) bool {
-	exists := databases.DB.Where("email=?", email).First(&userData).Error
+func emailExists(email string, userData *models.Users) bool {
+	exists := databases.DB.Where("email=?", email).First(userData).Error
 
-	// If exists isn't nil, then an account with that e-mail already exists.
+	// If exists isn't nil, then an account with that e-mail exists.
 	return exists == nil
 }
 
@@ -64,11 +66,11 @@ func Register(c *fiber.Ctx) error {
 		})
 	}
 
-	// Checks if email already exist in database.
-	if checkDupeEmail(strings.TrimSpace(data["email"].(string)), userData) {
+	// Checks if the e-mail address is already in use.
+	if emailExists(strings.TrimSpace(data["email"].(string)), &userData) {
 		c.Status(400)
 		return c.JSON(fiber.Map{
-			"message": "Email already exist",
+			"message": "E-Mail address already in use.",
 		})
 
 	}
@@ -80,7 +82,7 @@ func Register(c *fiber.Ctx) error {
 		Email:     strings.TrimSpace(data["email"].(string)),
 	}
 
-	// Encrypt Password.
+	// Set an encrypted password for the account.
 	user.SetPassword(data["password"].(string))
 
 	// Create the user in the database.
@@ -94,7 +96,57 @@ func Register(c *fiber.Ctx) error {
 
 	c.Status(200)
 	return c.JSON(fiber.Map{
-		"user":    user,
 		"message": "Account created.",
+	})
+}
+
+/*
+ * Log into a user account.
+ */
+func Login(c *fiber.Ctx) error {
+	var (
+		data     map[string]string
+		userData models.Users
+	)
+
+	if err := c.BodyParser(&data); err != nil {
+		log.Println("Unable to parse Body.")
+	}
+
+	// Checks there is an account with that e-mail address.
+	if !emailExists(strings.TrimSpace(data["email"]), &userData) {
+		c.Status(404)
+		return c.JSON(fiber.Map{
+			"message": "An account with that E-Mail Address does not exist.",
+		})
+	}
+
+	// Generate a JWT token using the E-Mail address and account ID.
+	token, err := authenthication.GenerateJWT(userData.Email, userData.Id)
+
+	if err != nil {
+		c.Status(fiber.StatusInternalServerError)
+		return nil
+	}
+
+	// Check if the password is correct.
+	if err := userData.ComparePassword(data["password"]); err != nil {
+		c.Status(400)
+		return c.JSON(fiber.Map{
+			"message": "Incorrect Password.",
+		})
+	}
+
+	cookie := fiber.Cookie{
+		Name:     "JWT",
+		Value:    token,
+		Expires:  time.Now().Add(time.Hour * 24),
+		HTTPOnly: true,
+	}
+
+	c.Cookie(&cookie)
+
+	return c.JSON(fiber.Map{
+		"message": "You have successfully logged in.",
 	})
 }

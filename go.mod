@@ -5,6 +5,7 @@ go 1.20
 require (
 	github.com/glebarez/sqlite v1.9.0
 	github.com/gofiber/fiber/v2 v2.49.2
+	github.com/golang-jwt/jwt v3.2.2+incompatible
 	golang.org/x/crypto v0.14.0
 	gorm.io/gorm v1.25.5
 )
