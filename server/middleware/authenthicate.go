@@ -6,7 +6,7 @@ import (
 )
 
 /*
- *
+ * Check to see if the user has the proper authenthication.
  */
 func Authenticate(c *fiber.Ctx) error {
 	cookie := c.Cookies("JWT")
@@ -14,7 +14,7 @@ func Authenticate(c *fiber.Ctx) error {
 	if err := authenthication.ValidateToken(cookie); err != nil {
 		c.Status(fiber.StatusUnauthorized)
 		return c.JSON(fiber.Map{
-			"message": "unauthenticated",
+			"message": "Unauthenticated.",
 		})
 	}
 
