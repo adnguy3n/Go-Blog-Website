@@ -27,7 +27,7 @@ func GenerateJWT(email string, id uint) (tokenString string, err error) {
 	expirationTime := time.Now().Add(24 * time.Hour)
 
 	// Generate a claim variable using the available data and expiration time.
-	claims := &JWTClaim{
+	claims := JWTClaim{
 		Id:    id,
 		Email: email,
 		StandardClaims: jwt.StandardClaims{
@@ -39,13 +39,13 @@ func GenerateJWT(email string, id uint) (tokenString string, err error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err = token.SignedString(jwtKey)
 
-	return tokenString, err
+	return
 }
 
 /*
  * Validate Token.
  */
-func ValidateToken(signedToken string) error {
+func ValidateToken(signedToken string) (err error) {
 	token, err := jwt.ParseWithClaims(
 		signedToken,
 		&JWTClaim{},
@@ -55,20 +55,20 @@ func ValidateToken(signedToken string) error {
 	)
 
 	if err != nil {
-		return err
+		return
 	}
 
 	claims, ok := token.Claims.(*JWTClaim)
 
 	if !ok {
 		err = errors.New("Could not parse claims.")
-		return err
+		return
 	}
 
 	if claims.ExpiresAt < time.Now().Local().Unix() {
 		err = errors.New("Token expired.")
-		return err
+		return
 	}
 
-	return err
+	return
 }
