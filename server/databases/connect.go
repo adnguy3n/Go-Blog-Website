@@ -33,5 +33,10 @@ func ConnectDatabase() {
 		log.Fatal(err)
 	}
 
+	err = database.AutoMigrate(&models.Post{})
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	DB = database
 }
