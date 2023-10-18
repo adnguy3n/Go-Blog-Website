@@ -8,6 +8,7 @@ import (
 
 	"github.com/adnguy3n/Go-Blog-Website/server/controller"
 	"github.com/adnguy3n/Go-Blog-Website/server/databases"
+	"github.com/adnguy3n/Go-Blog-Website/server/middleware"
 )
 
 /*
@@ -43,6 +44,6 @@ func routes(app *fiber.App) {
 	app.Post("account/register", controller.Register)
 	app.Post("account/login", controller.Login)
 
-	//app.Use(middleware.Authenticate)
-
+	app.Use(middleware.Authenticate)
+	app.Post("blog/post", controller.CreatePost)
 }
