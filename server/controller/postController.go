@@ -2,7 +2,6 @@ package controller
 
 import (
 	"log"
-	"math"
 	"strconv"
 
 	"github.com/adnguy3n/Go-Blog-Website/server/databases"
@@ -33,27 +32,46 @@ func CreatePost(c *fiber.Ctx) error {
 }
 
 /*
- * Get Blog Post.
+ * Get all Blog Post.
  */
 func GetAllPosts(c *fiber.Ctx) error {
 	var (
-		total int64
-		blog  models.Post
+		total    int64
+		blogPost []models.Post
 	)
 
 	page, _ := strconv.Atoi(c.Query("page", "1"))
 	limit := 5
 	offset := (page - 1) * limit
 
-	databases.DB.Preload("Users").Offset(offset).Limit(limit).Find(&blog)
+	databases.DB.Preload("Users").Offset(offset).Limit(limit).Find(&blogPost)
 	databases.DB.Model(&models.Post{}).Count(&total)
 
 	return c.JSON(fiber.Map{
-		"data": blog,
+		"data": blogPost,
 		"meta": fiber.Map{
 			"total":     total,
 			"page":      page,
-			"last_page": math.Ceil(float64(int(total) / limit)),
+			"last_page": float64(int(total) / limit),
 		},
+	})
+}
+
+/*
+ * Get Blog Post.
+ */
+func GetPost(c *fiber.Ctx) error {
+	var blogPost models.Post
+
+	id, _ := strconv.Atoi(c.Params("post_id"))
+	if err := databases.DB.Where("post_id=?", uint(id)).Preload("Users").First(&blogPost).Error; err != nil {
+		c.Status(400)
+		return c.JSON(fiber.Map{
+			"message": "Post not found.",
+		})
+	}
+
+	return c.JSON(fiber.Map{
+		"data": blogPost,
 	})
 }

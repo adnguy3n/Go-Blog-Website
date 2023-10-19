@@ -1,7 +1,7 @@
 package models
 
 type Post struct {
-	PostID      uint   `json:"postID" gorm:"unique"`
+	PostID      uint   `json:"post_id" gorm:"unique; primaryKey"`
 	Title       string `json:"title"`
 	Description string `json:"description"`
 	Image       string `json:"image"`

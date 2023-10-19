@@ -47,4 +47,5 @@ func routes(app *fiber.App) {
 	app.Use(middleware.Authenticate)
 	app.Post("blog/post", controller.CreatePost)
 	app.Get("blog/getAllPosts", controller.GetAllPosts)
+	app.Get("blog/getPost/:post_id", controller.GetPost)
 }
