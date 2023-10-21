@@ -6,8 +6,8 @@ import (
 
 type Users struct {
 	Id        uint   `json:"id" gorm:"unique"`
-	FirstName string `json:"First_Name"`
-	LastName  string `json:"Last_Name"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
 	Email     string `json:"email"`
 	Password  []byte `json:"-"`
 	Phone     string `json:"phone"`
