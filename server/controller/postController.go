@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"log"
+	//"log"
 	"strconv"
 
 	"github.com/adnguy3n/Go-Blog-Website/server/databases"
@@ -16,7 +16,10 @@ func CreatePost(c *fiber.Ctx) error {
 	var blogPost models.Post
 
 	if err := c.BodyParser(&blogPost); err != nil {
-		log.Println("Unable to parse body")
+		c.Status(400)
+		return c.JSON(fiber.Map{
+			"Message": "Unable to parse body",
+		})
 	}
 
 	if err := databases.DB.Create(&blogPost).Error; err != nil {
@@ -62,8 +65,8 @@ func GetAllPosts(c *fiber.Ctx) error {
  */
 func GetPost(c *fiber.Ctx) error {
 	var blogPost models.Post
-
 	id, _ := strconv.Atoi(c.Params("post_id"))
+
 	if err := databases.DB.Where("post_id=?", uint(id)).Preload("Users").First(&blogPost).Error; err != nil {
 		c.Status(400)
 		return c.JSON(fiber.Map{
@@ -73,5 +76,34 @@ func GetPost(c *fiber.Ctx) error {
 
 	return c.JSON(fiber.Map{
 		"data": blogPost,
+	})
+}
+
+/*
+ * Update Blog Post.
+ */
+func UpdatePost(c *fiber.Ctx) error {
+	id, _ := strconv.Atoi(c.Params("post_id"))
+
+	blogPost := models.Post{
+		PostID: uint(id),
+	}
+
+	if err := c.BodyParser(&blogPost); err != nil {
+		c.Status(400)
+		return c.JSON(fiber.Map{
+			"Message": "Unable to parse body",
+		})
+	}
+
+	if err := databases.DB.Model(&blogPost).Updates(blogPost).Error; err != nil {
+		c.Status(400)
+		return c.JSON(fiber.Map{
+			"Error": err,
+		})
+	}
+
+	return c.JSON(fiber.Map{
+		"message": "Post updated.",
 	})
 }
