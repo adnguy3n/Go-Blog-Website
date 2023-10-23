@@ -138,12 +138,15 @@ func DeletePost(c *fiber.Ctx) error {
 		PostID: uint(id),
 	}
 
-	deleteQuery := databases.DB.Delete(&blogPost)
-
-	if errors.Is(deleteQuery.Error, gorm.ErrRecordNotFound) {
+	if err := databases.DB.Delete(&blogPost).Error; errors.Is(err, gorm.ErrRecordNotFound) {
 		c.Status(400)
 		return c.JSON(fiber.Map{
 			"Error": "Post not found.",
+		})
+	} else if err != nil {
+		c.Status(400)
+		return c.JSON(fiber.Map{
+			"Error": err,
 		})
 	}
 
