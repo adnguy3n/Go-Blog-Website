@@ -1,9 +1,9 @@
 package controller
 
 import (
-	//"log"
 	"strconv"
 
+	"github.com/adnguy3n/Go-Blog-Website/server/authenthication"
 	"github.com/adnguy3n/Go-Blog-Website/server/databases"
 	"github.com/adnguy3n/Go-Blog-Website/server/models"
 	"github.com/gofiber/fiber/v2"
@@ -106,4 +106,22 @@ func UpdatePost(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{
 		"message": "Post updated.",
 	})
+}
+
+/*
+ * Get All Posts by current user.
+ */
+func GetUserPosts(c *fiber.Ctx) error {
+	var blogPosts []models.Post
+	cookie := c.Cookies("JWT")
+	id, _ := authenthication.ValidateToken(cookie)
+
+	if err := databases.DB.Model(&blogPosts).Where("user_id=?", id).Preload("Users").First(&blogPosts).Error; err != nil {
+		c.Status(400)
+		return c.JSON(fiber.Map{
+			"Error": err,
+		})
+	}
+
+	return c.JSON(blogPosts)
 }

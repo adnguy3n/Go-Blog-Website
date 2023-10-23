@@ -11,7 +11,7 @@ import (
 func Authenticate(c *fiber.Ctx) error {
 	cookie := c.Cookies("JWT")
 
-	if err := authenthication.ValidateToken(cookie); err != nil {
+	if _, err := authenthication.ValidateToken(cookie); err != nil {
 		c.Status(fiber.StatusUnauthorized)
 		return c.JSON(fiber.Map{
 			"message": "Unauthenticated.",
