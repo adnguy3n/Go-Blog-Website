@@ -15,7 +15,12 @@ import (
  * Create Blog Post.
  */
 func CreatePost(c *fiber.Ctx) error {
-	var blogPost models.Post
+	cookie := c.Cookies("JWT")
+	id, _ := authenthication.ValidateToken(cookie)
+
+	blogPost := models.Post{
+		UserID: id,
+	}
 
 	if err := c.BodyParser(&blogPost); err != nil {
 		c.Status(400)
