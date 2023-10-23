@@ -116,7 +116,7 @@ func GetUserPosts(c *fiber.Ctx) error {
 	cookie := c.Cookies("JWT")
 	id, _ := authenthication.ValidateToken(cookie)
 
-	if err := databases.DB.Model(&blogPosts).Where("user_id=?", id).Preload("Users").First(&blogPosts).Error; err != nil {
+	if err := databases.DB.Model(&blogPosts).Where("user_id=?", id).Preload("Users").Find(&blogPosts).Error; err != nil {
 		c.Status(400)
 		return c.JSON(fiber.Map{
 			"Error": err,
