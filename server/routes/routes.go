@@ -19,4 +19,5 @@ func Routes(app *fiber.App) {
 	app.Get("blog/getPost/:post_id", controller.GetPost)
 	app.Post("blog/update/:post_id", controller.UpdatePost)
 	app.Get("blog/userposts", controller.GetUserPosts)
+	app.Delete("blog/delete/:post_id", controller.DeletePost)
 }

@@ -1,12 +1,14 @@
 package controller
 
 import (
+	"errors"
 	"strconv"
 
 	"github.com/adnguy3n/Go-Blog-Website/server/authenthication"
 	"github.com/adnguy3n/Go-Blog-Website/server/databases"
 	"github.com/adnguy3n/Go-Blog-Website/server/models"
 	"github.com/gofiber/fiber/v2"
+	"gorm.io/gorm"
 )
 
 /*
@@ -124,4 +126,28 @@ func GetUserPosts(c *fiber.Ctx) error {
 	}
 
 	return c.JSON(blogPosts)
+}
+
+/*
+ * Delete Post.
+ */
+func DeletePost(c *fiber.Ctx) error {
+	id, _ := strconv.Atoi(c.Params("post_id"))
+
+	blogPost := models.Post{
+		PostID: uint(id),
+	}
+
+	deleteQuery := databases.DB.Delete(&blogPost)
+
+	if errors.Is(deleteQuery.Error, gorm.ErrRecordNotFound) {
+		c.Status(400)
+		return c.JSON(fiber.Map{
+			"Error": "Post not found.",
+		})
+	}
+
+	return c.JSON(fiber.Map{
+		"message": "Post Deleted.",
+	})
 }
