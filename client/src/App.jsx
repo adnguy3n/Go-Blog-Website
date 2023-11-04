@@ -6,8 +6,7 @@ import Register from "./components/register"
 function App() {
 
   return (
-    <>
-      <div className="">
+      <div>
         <BrowserRouter>
           <Routes>
             <Route exact path="/" element={<Home />} />
@@ -15,7 +14,6 @@ function App() {
           </Routes>
         </BrowserRouter>  
       </div>
-    </>
   )
 }
 
