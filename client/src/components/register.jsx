@@ -19,7 +19,7 @@ const Register = () => {
         };
 
         axios
-            .post("http://localhost:3000/account/register", { ...body })
+            .post("api/register", { ...body })
             // Handle Success
             .then(function (response) {
                 setLoading(false);
