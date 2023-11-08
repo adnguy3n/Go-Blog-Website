@@ -1,7 +1,7 @@
-import './App.css'
-import { BrowserRouter, Route, Routes } from "react-router-dom"
-import Home from "./components/home"
-import Register from "./components/register"
+import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./components/home";
+import Register from "./components/register";
 
 function App() {
 
@@ -14,7 +14,7 @@ function App() {
           </Routes>
         </BrowserRouter>  
       </div>
-  )
+  );
 }
 
 export default App
