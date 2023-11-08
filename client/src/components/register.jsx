@@ -57,7 +57,6 @@ const Register = () => {
                     <div className="pl-8">
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="text-sm">First Name</div>
-                    
                             <div className="relative text-gray-600 focus-within:text-gray-400">
                                 <span className="absolute inset-y-0 left-0 flex items-center pl-2">
                                     <svg
@@ -92,8 +91,7 @@ const Register = () => {
                                 </div>
                             </div>
 
-                            <div className="pt-6 text-sm">Last Name:</div>
-                            
+                            <div className="pt-6 text-sm">Last Name:</div> 
                             <div className="relative text-gray-600 focus-within:text-gray-400">
                                 <span className="absolute inset-y-0 left-0 flex items-center pl-2">
                                     <svg
