@@ -10,16 +10,16 @@ import (
  * Routes.
  */
 func Routes(app *fiber.App) {
-	app.Post("account/register", controller.Register)
-	app.Post("account/login", controller.Login)
+	app.Post("api/register", controller.Register)
+	app.Post("api/login", controller.Login)
 
 	app.Use(middleware.Authenticate)
-	app.Post("blog/post", controller.CreatePost)
-	app.Get("blog/getAllPosts", controller.GetAllPosts)
-	app.Get("blog/getPost/:post_id", controller.GetPost)
-	app.Post("blog/update/:post_id", controller.UpdatePost)
-	app.Get("blog/userposts", controller.GetUserPosts)
-	app.Delete("blog/delete/:post_id", controller.DeletePost)
-	app.Post("/image/upload", controller.Upload)
-	app.Static("/image/uploads", "./uploads")
+	app.Post("api/post", controller.CreatePost)
+	app.Get("api/getAllPosts", controller.GetAllPosts)
+	app.Get("api/getPost/:post_id", controller.GetPost)
+	app.Post("api/update/:post_id", controller.UpdatePost)
+	app.Get("api/userposts", controller.GetUserPosts)
+	app.Delete("api/delete/:post_id", controller.DeletePost)
+	app.Post("api/upload", controller.Upload)
+	app.Static("api/uploads", "./uploads")
 }
