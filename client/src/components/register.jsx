@@ -1,10 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form"
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
     const [message, setMessage] = useState();
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const {
         register,
@@ -26,6 +28,7 @@ const Register = () => {
                 setMessage(response?.data?.message);
                 localStorage.setItem("users". JSON.stringify(response?.data?.user));
                 console.log(response?.data?.user);
+                navigate("/login");
             })
 
             // Handle Error
@@ -241,7 +244,7 @@ const Register = () => {
                                 </button>
 
                                 <div className="text-center text-sm pt-1">
-                                    Already have an account? Login
+                                    Already have an account? <Link to="/login">Login</Link>
                                 </div>
                             </div>
                         </form>
