@@ -36,10 +36,6 @@ const Register = () => {
                 setLoading(false);
                 setMessage(error?.response?.data?.message);
             })
-
-            .then(function () {
-
-            });
     }
 
     return (
