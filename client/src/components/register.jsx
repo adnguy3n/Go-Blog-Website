@@ -240,7 +240,7 @@ const Register = () => {
                                 </button>
 
                                 <div className="text-center text-sm pt-1">
-                                    Already have an account? <Link to="/login">Login</Link>
+                                    Already have an account? <Link style={{color: 'blue'}} to="/login">Login</Link>
                                 </div>
                             </div>
                         </form>
