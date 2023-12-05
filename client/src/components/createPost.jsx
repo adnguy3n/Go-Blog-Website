@@ -72,13 +72,8 @@ const CreatePost = () => {
 
         // Append the values with key-value pair.
         formData.append("image", imageUpload);
-        try {
+        if (imageUpload) {
             formData.append("name", imageUpload.name);
-        } catch (error) {
-            console.log(error instanceof TypeError)
-            console.log(error.message)
-            console.log(error.name)
-            console.log(error.stack)
         }
         
         const config = {
