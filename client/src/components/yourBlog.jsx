@@ -8,8 +8,20 @@ const YourBlog = () => {
     const [deleteLoading, setDeleteLoading] = useState(false);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const User = localStorage.getItem("users");
+
+        if (!User) {
+            navigate("/login")
+        }
+
+        getUserPosts();
+    }, [navigate]);
+
+    // Gets all of the posts made by the logged in user.
     const getUserPosts = () => {
-        setLoading(true)
+        setLoading(true);
+
         axios
             .get(
                 "api/userposts",
@@ -35,16 +47,6 @@ const YourBlog = () => {
             });
     };
 
-    useEffect(() => {
-        const User = localStorage.getItem("users");
-
-        if (!User) {
-            navigate("/login")
-        }
-
-        getUserPosts();
-    }, [navigate]);
-
     const deleteButton = (blogPost) => {
         setDeleteLoading(true);
 
@@ -64,31 +66,32 @@ const YourBlog = () => {
     };
 
     return (
-        <>
-            {!loading && blogData?.length <= 0 && (
-                <div className="text-2xl font-bold text-center flex justify-center items-center pl-16 pt-24">
-                    <h1>You do not have post yet. Kindly create a post </h1>
-                </div>
-            )}
-
-            {loading && (
-                <div className="text-2xl font-bold text-center px-56 pt-24">
-                    <h1>LOADING.....</h1>
-                </div>
-            )}
-
             <div className="container my-12 mx-auto px-4 md:px-12">
+                {!loading && blogData?.length <= 0 && (
+                    <div className="text-2xl font-bold text-center flex justify-center items-center pl-16 pt-24">
+                        <h1>You do not have post yet. Kindly create a post </h1>
+                    </div>
+                )}
+
+                {loading && (
+                    <div className="text-2xl font-bold text-center px-56 pt-24">
+                        <h1>LOADING.....</h1>
+                    </div>
+                )}
+
                 <div className="flex flex-wrap -mx-1 lg:mx-4">
                     {blogData?.map((blogPost) => (
                         <div className="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3" key={blogPost.id}>
                             <article className="overflow-hidden rounded-lg shadow-lg">
                                 <a href={`/`}>
-                                    {blogPost?.image && (
+                                    {blogPost?.image ? (
                                         <img
                                             alt="Placeholder"
                                             className="block h-72 w-full"
                                             src={blogPost?.image}
                                         />
+                                    ) : (
+                                        <div className="block h-72 w-full"/>
                                     )}
                                 </a>
 
@@ -98,6 +101,10 @@ const YourBlog = () => {
                                             {blogPost.title}
                                         </a>
                                     </h1>
+
+                                    <p className="text-grey-darker text-sm">
+                                        {new Date(blogPost?.created_at).toLocaleString()}
+                                    </p>
                                 </header>
 
                                 <footer>
@@ -108,7 +115,6 @@ const YourBlog = () => {
                     ))}
                 </div>
             </div>
-        </>
     );
 };
 
