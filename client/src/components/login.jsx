@@ -27,7 +27,7 @@ const Login = () => {
             .then(function (response) {
                 setLoading(false);
                 setMessage(response?.data?.message)
-                localStorage.setItem("users", JSON.stringify(response?.data?.users))
+                localStorage.setItem("users", true)
                 navigate("/");
             })
 
