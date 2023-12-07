@@ -14,8 +14,9 @@ const Register = () => {
         formState: { errors },
     } = useForm();
 
+    // Called when the Sign Up button is pressed.
     const onSubmit = (data) => {
-        setLoading(true)
+        setLoading(true);
         const body = {
             ...data,
         };
@@ -23,18 +24,15 @@ const Register = () => {
         axios
             .post("api/register", { ...body })
             // Handle Success
-            .then(function (response) {
+            .then(function () {
                 setLoading(false);
-                setMessage(response?.data?.message);
-                localStorage.setItem("users". JSON.stringify(response?.data?.user));
-                console.log(response?.data?.user);
                 navigate("/login");
             })
 
             // Handle Error
             .catch(function (error) {
                 setLoading(false);
-                setMessage(error?.response?.data?.message);
+                setMessage(error);
             })
     }
 
@@ -115,7 +113,7 @@ const Register = () => {
                                     })}
                                 />
                                 <div>
-                                    {errors.first_name && errors.first_name.type === "required" && (
+                                    {errors.last_name && errors.last_name.type === "required" && (
                                         <span 
                                         role="alert"
                                         className="text-red-600 text-[10px] italic">
@@ -142,7 +140,7 @@ const Register = () => {
                                 </span>
                                 <input 
                                     type = "text"
-                                    name = "last_name"
+                                    name = "email"
                                     className = "py-2 border-b-2 text-sm rounded-md pl-10 focus:outline-none w-10/12 focus:bg-white focus:text-gray-900"
                                     placeholder = "Enter your Email"
                                     {...register("email", {
@@ -150,7 +148,7 @@ const Register = () => {
                                     })}
                                 />
                                 <div>
-                                    {errors.first_name && errors.first_name.type === "required" && (
+                                    {errors.email && errors.email.type === "required" && (
                                         <span 
                                         role="alert"
                                         className="text-red-600 text-[10px] italic">
@@ -175,17 +173,17 @@ const Register = () => {
                                         <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                                     </svg>
                                 </span>
-                                <input 
-                                    type = "text"
-                                    name = "last_name"
+                                <input
+                                    type = "password"
+                                    name = "password"
                                     className = "py-2 border-b-2 text-sm rounded-md pl-10 focus:outline-none w-10/12 focus:bg-white focus:text-gray-900"
-                                    placeholder = "Enter your password"
+                                    placeholder = "Enter your Password"
                                     {...register("password", {
-                                        required: true
+                                        required: true,
                                     })}
                                 />
                                 <div>
-                                    {errors.first_name && errors.first_name.type === "required" && (
+                                    {errors.password && errors.password.type === "required" && (
                                         <span 
                                         role="alert"
                                         className="text-red-600 text-[10px] italic">
@@ -212,7 +210,7 @@ const Register = () => {
                                 </span>
                                 <input 
                                     type = "text"
-                                    name = "last_name"
+                                    name = "phone"
                                     className = "py-2 border-b-2 text-sm rounded-md pl-10 focus:outline-none w-10/12 focus:bg-white focus:text-gray-900"
                                     placeholder = "Enter your phone number."
                                     {...register("phone", {
@@ -220,7 +218,7 @@ const Register = () => {
                                     })}
                                 />
                                 <div>
-                                    {errors.first_name && errors.first_name.type === "required" && (
+                                    {errors.phone && errors.phone.type === "required" && (
                                         <span 
                                         role="alert"
                                         className="text-red-600 text-[10px] italic">
