@@ -9,7 +9,6 @@ const CreatePost = () => {
     const [loading, setLoading] = useState(false);
     const [imageData, setImageData] = useState();
     const [imageUpload, setImageUpload] = useState();
-    const [userData, setUserData] = useState();
     const navigate = useNavigate();
 
     const {
@@ -19,14 +18,16 @@ const CreatePost = () => {
     } = useForm();
     
     useEffect(() => {
-        const User = localStorage.getItem("user");
-        const parseUser = JSON.parse(User);
-        setUserData(parseUser);
+        const User = localStorage.getItem("users");
 
         if (!User) {
             navigate("/login")
         }
-    }, [navigate]);
+
+        if (imageData) {
+            console.log(imageData);
+        }
+    }, [imageData, navigate]);
 
     const onSubmit = (data) => {
         setLoading(true);
@@ -34,22 +35,21 @@ const CreatePost = () => {
         const body = {
             ...data,
             image: imageData,
-            userid: userData.id,
         }
 
         axios
-            .post("api/login", { ...body }, { withCredentials: true, })
+            .post("api/post", { ...body }, { withCredentials: true, })
             
             // Handle Success
             .then(function () {
                 setLoading(false);
-                navigate("/");
+                navigate("/yourblog");
             })
 
             // Handle error
             .catch(function (error) {
                 setLoading(false);
-                console.log(error)
+                console.log(error);
             })
     };
 
@@ -64,6 +64,7 @@ const CreatePost = () => {
         if (e.target.files[0]) {
             reader.readAsDataURL(e.target.files[0]);
             e.target.value = null;
+            setImageData()
         }
     };
 
@@ -74,25 +75,26 @@ const CreatePost = () => {
         formData.append("image", imageUpload);
         if (imageUpload) {
             formData.append("name", imageUpload.name);
-        }
-        
-        const config = {
-            headers: { "content-type": "multipart/form-data" },
-            withCredentials: true,
-        }
 
-        axios
-            .post("api/login", formData, config)
+            const config = {
+                headers: { "content-type": "multipart/form-data" },
+                withCredentials: true,
+            }
+
+            axios
+            .post("api/upload", formData, config)
 
             // Handle Success
             .then(function (response) {
-                setImageData(response?.data?.url)
+                console.log(response?.data?.url);
+                setImageData(response?.data?.url);
             })
 
             // Handle error
             .catch(function (error) {
-                console.log(error)
+                console.log(error);
             });
+        }
     };
     
     return (
@@ -171,11 +173,17 @@ const CreatePost = () => {
                                     )}
                                 </div>
                             </label>
+                            {imageData && (
+                                <p className="text-xs italic px-3">
+                                    Image Uploaded.
+                                </p>
+                        )}
                         </div>
-
+                        
                         <div className="flex items-center justify-cente px-5">
                             <button
                                 className="shadow bg-indigo-600 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-6 rounded"
+                                type="button"
                                 onClick={uploadImage}
                                 disabled={loading}
                             >
