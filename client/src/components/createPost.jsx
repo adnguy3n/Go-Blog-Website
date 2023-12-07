@@ -188,13 +188,13 @@ const CreatePost = () => {
                             </label>
                             <textarea
                                 rows="10"
-                                name="desc"
+                                name="description"
                                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                {...register("desc", {
+                                {...register("description", {
                                     required: true,
                                 })}
                             />
-                            {errors.desc && errors.desc.type === "required" && (
+                            {errors.description && errors.description.type === "required" && (
                                 <p className="text-red-500 text-xs italic">
                                     Please fill out this field.
                                 </p>
