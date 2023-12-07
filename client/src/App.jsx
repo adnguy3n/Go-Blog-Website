@@ -4,6 +4,7 @@ import Home from "./components/home";
 import Register from "./components/register";
 import Login from "./components/login";
 import CreatePost from "./components/createPost";
+import YourBlog from "./components/yourBlog";
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
             <Route exact path="/register" element={<Register />} />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/createpost" element={<CreatePost />} />
+            <Route exact path="/yourblog" element={<YourBlog />} />
           </Routes>
         </BrowserRouter>  
       </div>
