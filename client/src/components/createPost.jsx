@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import uploadLogo from "./assets/upload-image.svg"
 
 const CreatePost = () => {
-    const [image, setImage] = useState();
     const [loading, setLoading] = useState(false);
+    const [image, setImage] = useState();
     const [imageUpload, setImageUpload] = useState();
     const navigate = useNavigate();
 
@@ -24,11 +24,13 @@ const CreatePost = () => {
         }
     }, [navigate]);
 
+    // Called when the Create Post button is pressed.
     const onSubmit = (data) => {
         setLoading(true);
         uploadImage(data);
     };
 
+    // Handles image preview after selection.
     const handleImage = (e) => {
         setImageUpload(e.target.files[0]);
 
