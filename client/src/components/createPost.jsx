@@ -7,7 +7,6 @@ import uploadLogo from "./assets/upload-image.svg"
 const CreatePost = () => {
     const [image, setImage] = useState();
     const [loading, setLoading] = useState(false);
-    const [imageData, setImageData] = useState();
     const [imageUpload, setImageUpload] = useState();
     const navigate = useNavigate();
 
@@ -23,15 +22,60 @@ const CreatePost = () => {
         if (!User) {
             navigate("/login")
         }
-
-        if (imageData) {
-            console.log(imageData);
-        }
-    }, [imageData, navigate]);
+    }, [navigate]);
 
     const onSubmit = (data) => {
         setLoading(true);
+        uploadImage(data);
+    };
 
+    const handleImage = (e) => {
+        setImageUpload(e.target.files[0]);
+
+        const reader = new FileReader();
+        reader.onloadend = function() {
+            setImage({ [e.target.name]: reader.result });
+        };
+
+        if (e.target.files[0]) {
+            reader.readAsDataURL(e.target.files[0]);
+            e.target.value = null;
+        }
+    };
+
+    // Upload Image to Server.
+    const uploadImage = (data) => {
+        let formData = new FormData();
+        let imageData;
+
+        // Append the values with key-value pair.
+        formData.append("image", imageUpload);
+        if (imageUpload) {
+            formData.append("name", imageUpload.name);
+
+            const config = {
+                headers: { "content-type": "multipart/form-data" },
+                withCredentials: true,
+            }
+
+            axios
+            .post("api/upload", formData, config)
+
+            // Handle Success
+            .then(function (response) {
+                imageData = response?.data?.url;
+                createBlogPost(data, imageData);
+            })
+
+            // Handle error
+            .catch(function (error) {
+                console.log(error);
+            })
+        }
+    };
+
+    // Create Blog Post
+    const createBlogPost = (data, imageData) => {
         const body = {
             ...data,
             image: imageData,
@@ -51,51 +95,7 @@ const CreatePost = () => {
                 setLoading(false);
                 console.log(error);
             })
-    };
-
-    const handleImage = (e) => {
-        setImageUpload(e.target.files[0]);
-
-        const reader = new FileReader();
-        reader.onloadend = function() {
-            setImage({ [e.target.name]: reader.result });
-        };
-
-        if (e.target.files[0]) {
-            reader.readAsDataURL(e.target.files[0]);
-            e.target.value = null;
-            setImageData()
-        }
-    };
-
-    const uploadImage = () => {
-        let formData = new FormData();
-
-        // Append the values with key-value pair.
-        formData.append("image", imageUpload);
-        if (imageUpload) {
-            formData.append("name", imageUpload.name);
-
-            const config = {
-                headers: { "content-type": "multipart/form-data" },
-                withCredentials: true,
-            }
-
-            axios
-            .post("api/upload", formData, config)
-
-            // Handle Success
-            .then(function (response) {
-                console.log(response?.data?.url);
-                setImageData(response?.data?.url);
-            })
-
-            // Handle error
-            .catch(function (error) {
-                console.log(error);
-            });
-        }
-    };
+    }
     
     return (
             <div className="max-w-screen-md mx-auto p-5">
@@ -173,22 +173,6 @@ const CreatePost = () => {
                                     )}
                                 </div>
                             </label>
-                            {imageData && (
-                                <p className="text-xs italic px-3">
-                                    Image Uploaded.
-                                </p>
-                        )}
-                        </div>
-                        
-                        <div className="flex items-center justify-cente px-5">
-                            <button
-                                className="shadow bg-indigo-600 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-6 rounded"
-                                type="button"
-                                onClick={uploadImage}
-                                disabled={loading}
-                            >
-                                {loading ? "Loading..." : "upload image"}
-                            </button>
                         </div>
                     </div>
 
