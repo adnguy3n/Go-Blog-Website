@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const YourBlog = () => {
     const [loading, setLoading] = useState(false)
@@ -50,7 +50,7 @@ const YourBlog = () => {
         setDeleteLoading(true);
 
         axios
-            .delete(`api/delete/${blogPost.id}`, {withCredentials: true})
+            .delete(`api/delete/${blogPost.post_id}`, {withCredentials: true})
 
             .then(function (response) {
                 setDeleteLoading(false);
@@ -83,7 +83,7 @@ const YourBlog = () => {
                     {blogData?.map((blogPost) => (
                         <div className="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3" key={blogPost.post_id}>
                             <article className="overflow-hidden rounded-lg shadow-lg">
-                                <a href={`/`}>
+                                <Link to={`/`}>
                                     {blogPost?.image ? (
                                         <center>
                                             <img
@@ -95,12 +95,12 @@ const YourBlog = () => {
                                     ) : (
                                         <div className="block h-72 w-full"/>
                                     )}
-                                </a>
+                                </Link>
                                 <header className="flex items-center justify-between leading-tight p-2 md:p-4">
                                     <h1 className="text-lg">
-                                        <a href={`/`}>
+                                        <Link to={`/`}>
                                             {blogPost.title}
-                                        </a>
+                                        </Link>
                                     </h1>
 
                                     <p className="text-grey-darker text-sm">
@@ -108,12 +108,24 @@ const YourBlog = () => {
                                     </p>
                                 </header>
 
-                                <footer>
-                                    <a>
-                                        <p className="ml-2 text-sm">
-                                            {blogPost?.user?.first_name} {blogPost?.user?.last_name}
-                                        </p>
-                                    </a>
+                                <footer className="flex items-center justify-between leading-none p-2 md:p-4">
+                                    <p className="ml-2 text-sm">
+                                        {blogPost?.user?.first_name} {blogPost?.user?.last_name}
+                                    </p>
+
+                                    <button
+                                        onClick={() => deleteButton(blogPost)}
+                                        disabled={loading}
+                                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                    >
+                                        {deleteLoading ? "Loading" : "Delete"}
+                                    </button>
+
+                                    <Link to={`edit/${blogPost.post_id}`}>
+                                        <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
+                                            Edit
+                                        </button>
+                                    </Link>
                                 </footer>
                             </article>
                         </div>
