@@ -27,7 +27,7 @@ const Login = () => {
             .then(function (response) {
                 setLoading(false);
                 setMessage(response?.data?.message)
-                localStorage.setItem("users", true)
+                localStorage.setItem("loggedIn", true)
                 navigate("/");
             })
 

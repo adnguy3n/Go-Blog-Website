@@ -9,9 +9,9 @@ const YourBlog = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const User = localStorage.getItem("users");
+        const loggedIn = localStorage.getItem("loggedIn");
 
-        if (!User) {
+        if (!loggedIn) {
             navigate("/login")
         }
 

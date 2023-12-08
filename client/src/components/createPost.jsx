@@ -17,9 +17,9 @@ const CreatePost = () => {
     } = useForm();
     
     useEffect(() => {
-        const User = localStorage.getItem("users");
-
-        if (!User) {
+        const loggedIn = localStorage.getItem("loggedIn");
+        
+        if (!loggedIn) {
             navigate("/login")
         }
     }, [navigate]);
