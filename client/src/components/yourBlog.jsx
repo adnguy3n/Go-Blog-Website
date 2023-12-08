@@ -16,7 +16,8 @@ const YourBlog = () => {
         }
 
         getUserPosts();
-    }, [navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     // Gets all of the posts made by the logged in user.
     const getUserPosts = () => {

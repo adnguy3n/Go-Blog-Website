@@ -22,7 +22,8 @@ const CreatePost = () => {
         if (!loggedIn) {
             navigate("/login")
         }
-    }, [navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     // Called when the Create Post button is pressed.
     const onSubmit = (data) => {
