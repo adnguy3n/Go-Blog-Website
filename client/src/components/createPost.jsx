@@ -27,7 +27,11 @@ const CreatePost = () => {
     // Called when the Create Post button is pressed.
     const onSubmit = (data) => {
         setLoading(true);
-        uploadImage(data);
+        if (imageUpload) {
+            uploadImage(data);
+        } else {
+            createBlogPost(data);
+        }
     };
 
     // Handles image preview after selection.
