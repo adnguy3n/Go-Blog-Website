@@ -37,7 +37,6 @@ const YourBlog = () => {
             .then(function (response) {
                 setLoading(false);
                 setBlogData(response?.data);
-                console.log(response?.data);
             })
             
             // Handle Error
@@ -66,35 +65,37 @@ const YourBlog = () => {
     };
 
     return (
-            <div className="container my-12 mx-auto px-4 md:px-12">
-                {!loading && blogData?.length <= 0 && (
+        <>
+            {!loading && blogData?.length <= 0 && (
                     <div className="text-2xl font-bold text-center flex justify-center items-center pl-16 pt-24">
                         <h1>You do not have post yet. Kindly create a post </h1>
                     </div>
                 )}
 
-                {loading && (
-                    <div className="text-2xl font-bold text-center px-56 pt-24">
-                        <h1>LOADING.....</h1>
-                    </div>
-                )}
+            {loading && (
+                <div className="text-2xl font-bold text-center px-56 pt-24">
+                    <h1>LOADING.....</h1>
+                </div>
+            )}
 
+            <div className="container my-12 mx-auto px-4 md:px-12">
                 <div className="flex flex-wrap -mx-1 lg:mx-4">
                     {blogData?.map((blogPost) => (
-                        <div className="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3" key={blogPost.id}>
+                        <div className="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3" key={blogPost.post_id}>
                             <article className="overflow-hidden rounded-lg shadow-lg">
                                 <a href={`/`}>
                                     {blogPost?.image ? (
-                                        <img
-                                            alt="Placeholder"
-                                            className="block h-72 w-full"
-                                            src={blogPost?.image}
-                                        />
+                                        <center>
+                                            <img
+                                                alt="Placeholder"
+                                                className="block h-72 w-100%"
+                                                src={blogPost?.image}
+                                            />
+                                        </center>
                                     ) : (
                                         <div className="block h-72 w-full"/>
                                     )}
                                 </a>
-
                                 <header className="flex items-center justify-between leading-tight p-2 md:p-4">
                                     <h1 className="text-lg">
                                         <a href={`/`}>
@@ -108,13 +109,18 @@ const YourBlog = () => {
                                 </header>
 
                                 <footer>
-
+                                    <a>
+                                        <p className="ml-2 text-sm">
+                                            {blogPost?.user?.first_name} {blogPost?.user?.last_name}
+                                        </p>
+                                    </a>
                                 </footer>
                             </article>
                         </div>
                     ))}
                 </div>
             </div>
+        </>
     );
 };
 
