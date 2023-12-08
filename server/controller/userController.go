@@ -150,3 +150,20 @@ func Login(c *fiber.Ctx) error {
 		"message": "You have successfully logged in.",
 	})
 }
+
+/*
+ *
+ */
+func Logout(c *fiber.Ctx) error {
+	cookie := fiber.Cookie{
+		Name:    "JWT",
+		Value:   "",
+		Expires: time.Now().Add(-time.Hour * 24),
+	}
+
+	c.Cookie(&cookie)
+
+	return c.JSON(fiber.Map{
+		"message": "Logged out.",
+	})
+}
