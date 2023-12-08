@@ -163,7 +163,7 @@ const CreatePost = () => {
                                             <div>
                                                 <img
                                                     className="-object-contain -mt-8 p-5 w-1/2"
-                                                    src={image ? image.image : ""}
+                                                    src={image.image}
                                                     alt=""
                                                 />
                                             </div>
