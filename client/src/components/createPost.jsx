@@ -52,7 +52,7 @@ const CreatePost = () => {
     // Upload Image to Server.
     const uploadImage = (data) => {
         let formData = new FormData();
-        let imageData;
+        let imageData = "";
 
         // Append the values with key-value pair.
         formData.append("image", imageUpload);
