@@ -5,12 +5,14 @@ import Register from "./components/register";
 import Login from "./components/login";
 import CreatePost from "./components/createPost";
 import YourBlog from "./components/yourBlog";
+import Navbar from "./components/navbar";
 
 function App() {
 
   return (
       <div>
         <BrowserRouter>
+          <Navbar/>
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/register" element={<Register />} />
