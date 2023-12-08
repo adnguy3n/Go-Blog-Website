@@ -83,7 +83,7 @@ const YourBlog = () => {
                     {blogData?.map((blogPost) => (
                         <div className="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3" key={blogPost.post_id}>
                             <article className="overflow-hidden rounded-lg shadow-lg">
-                                <Link to={`/`}>
+                                <Link to={`/getPost/${blogPost.post_id}`}>
                                     {blogPost?.image ? (
                                         <center>
                                             <img
@@ -98,7 +98,7 @@ const YourBlog = () => {
                                 </Link>
                                 <header className="flex items-center justify-between leading-tight p-2 md:p-4">
                                     <h1 className="text-lg">
-                                        <Link to={`/`}>
+                                        <Link to={`/getPost/${blogPost.post_id}`}>
                                             {blogPost.title}
                                         </Link>
                                     </h1>
@@ -121,7 +121,7 @@ const YourBlog = () => {
                                         {deleteLoading ? "Loading" : "Delete"}
                                     </button>
 
-                                    <Link to={`edit/${blogPost.post_id}`}>
+                                    <Link to={`/edit/${blogPost.post_id}`}>
                                         <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
                                             Edit
                                         </button>
