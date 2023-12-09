@@ -1,15 +1,18 @@
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const Navbar = ({ loginStatus, checkLogin}) => {
+    const navigate = useNavigate();
+
     const logOut = () => {
         axios
-            .get("api/logout", { withCredentials: true })
+            .get("api/logout")
 
             // Handle Success
             .then(function() {
                 checkLogin();
+                navigate("/");
             })
 
             // Handle Error
