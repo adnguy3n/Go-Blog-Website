@@ -54,7 +54,7 @@ const [loginStatus, setLoginStatus] = useState(false);
             <Route exact path="/login" element={<Login checkLogin={checkLogin}/>} />
             <Route exact path="/createpost" element={<CreatePost logout={logout}/>} />
             <Route exact path="/yourblog" element={<YourBlog logout={logout} />} />
-            <Route exact path="/getpost/:id" element={<GetPost />} />
+            <Route exact path="/getpost/:post_id" element={<GetPost logout={logout} />} />
           </Routes>
         </BrowserRouter>  
       </div>
