@@ -1,9 +1,6 @@
 package main
 
 import (
-	"fmt"
-	//"log"
-
 	"github.com/gofiber/fiber/v2"
 
 	"github.com/adnguy3n/Go-Blog-Website/server/databases"
@@ -14,7 +11,6 @@ import (
  * Main.
  */
 func main() {
-	fmt.Println("Hello World")
 	databases.ConnectDatabase()
 	startServer()
 }
