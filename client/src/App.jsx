@@ -8,7 +8,7 @@ import Register from "./components/register";
 import Login from "./components/login";
 import CreatePost from "./components/createPost";
 import YourBlog from "./components/yourBlog";
-import GetPost from ".components/getPost";
+import GetPost from "./components/getPost";
 
 function App() {
 const [loginStatus, setLoginStatus] = useState(false);
