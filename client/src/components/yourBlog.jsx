@@ -25,12 +25,7 @@ const YourBlog = ({ logout }) => {
         setLoading(true);
 
         axios
-            .get(
-                "api/userposts",
-                {
-                    withCredentials: true,
-                }
-            )
+            .get("api/userposts", { withCredentials: true, })
 
             // Handle Success
             .then(function (response) {
