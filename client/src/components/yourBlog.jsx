@@ -9,6 +9,7 @@ const YourBlog = ({ logout }) => {
     const [deleteLoading, setDeleteLoading] = useState(false);
     const navigate = useNavigate();
 
+    // Get all of the user's blog posts if they are logged in.
     useEffect(() => {
         const loggedIn = localStorage.getItem("loggedIn");
 
@@ -109,19 +110,21 @@ const YourBlog = ({ logout }) => {
                                         {blogPost?.user?.first_name} {blogPost?.user?.last_name}
                                     </p>
 
-                                    <button
-                                        onClick={() => deleteButton(blogPost)}
-                                        disabled={loading}
-                                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                    >
-                                        {deleteLoading ? "Loading" : "Delete"}
-                                    </button>
-
-                                    <Link to={`/edit/${blogPost.post_id}`}>
-                                        <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
-                                            Edit
+                                    <right>
+                                        <button
+                                            onClick={() => deleteButton(blogPost)}
+                                            disabled={loading}
+                                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mr-2 rounded"
+                                        >
+                                            {deleteLoading ? "Loading" : "Delete"}
                                         </button>
-                                    </Link>
+
+                                        <Link to={`/edit/${blogPost.post_id}`}>
+                                            <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
+                                                Edit
+                                            </button>
+                                        </Link>
+                                    </right>
                                 </footer>
                             </article>
                         </div>
