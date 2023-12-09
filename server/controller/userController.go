@@ -152,7 +152,7 @@ func Login(c *fiber.Ctx) error {
 }
 
 /*
- *
+ * Logout.
  */
 func Logout(c *fiber.Ctx) error {
 	cookie := fiber.Cookie{
@@ -165,5 +165,20 @@ func Logout(c *fiber.Ctx) error {
 
 	return c.JSON(fiber.Map{
 		"message": "Logged out.",
+	})
+}
+
+/*
+ * Check if the current login is still valid.
+ */
+func CheckLogin(c *fiber.Ctx) error {
+	if c.Cookies("JWT") == "" {
+		return c.JSON(fiber.Map{
+			"isValid": false,
+		})
+	}
+
+	return c.JSON(fiber.Map{
+		"isValid": true,
 	})
 }

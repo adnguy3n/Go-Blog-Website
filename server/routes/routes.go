@@ -12,6 +12,7 @@ import (
 func Routes(app *fiber.App) {
 	app.Post("api/register", controller.Register)
 	app.Post("api/login", controller.Login)
+	app.Get("api/checklogin", controller.CheckLogin)
 
 	app.Use(middleware.Authenticate)
 	app.Get("api/logout", controller.Logout)
