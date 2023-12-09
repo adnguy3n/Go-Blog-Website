@@ -1,31 +1,19 @@
-import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
-const Navbar = () => {
-    const [loading, setLoading] = useState(false);
-    const [loginStatus, setLoginStatus] = useState(false);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const loggedIn = localStorage.getItem("loggedIn");
-        setLoginStatus(loggedIn);
-    }, [loginStatus]);
-
+const Navbar = ({ loginStatus, checkLogin}) => {
     const logOut = () => {
         axios
-            .post("api/logout")
+            .get("api/logout", { withCredentials: true })
 
             // Handle Success
             .then(function() {
-                setLoading(false);
-                localStorage.removeItem("loggedIn");
-                navigate("/login");
+                checkLogin();
             })
 
             // Handle Error
             .catch(function (error) {
-                setLoading(false);
                 console.log(error)
             });
     };
@@ -48,25 +36,64 @@ const Navbar = () => {
                 </span>
             </div>
 
-            <label
-                className="block lg:hidden cursor-pointer items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white"
-                htmlFor="menu-toggle"
-            >
-                <svg
-                    className="fill-current h-3 w-3"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <title>
-                        Menu
-                    </title>
-                    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-                </svg>
-            </label>
-            <input className="hidden" type="checkbox" id="menu-toggle" />
+            <div className="block w-full flex-grow lg:flex lg:items-center lg:w-auto">
+                <div className="text-sm lg:flex-grow">
+                    <Link
+                        to="/"
+                        className="block mt-4 text-base lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+                    >
+                        Home
+                    </Link>
+
+                    <Link
+                        to="/createpost"
+                        className="block mt-4 text-base lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+                    >
+                        Create Post
+                    </Link>
+
+                    <Link
+                        to="/yourblog"
+                        className="block mt-4 text-base lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+                    >
+                        Your Blog
+                    </Link>
+
+                    {loginStatus ? (
+                        <button
+                            className="block mt-4 text-base lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+                            onClick={logOut}
+                        >
+                            Logout
+                        </button>
+                    ) : (
+                        <>
+                            <Link
+                                to="/login"
+                                className="block mt-4 text-base lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+                            >
+                                login
+                            </Link>
+                            
+                            <Link
+                                to="/register"
+                                className="block mt-4 text-base lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+                            >
+                                register
+                            </Link>
+                        </>
+                    )}
+                </div>
+
+            </div>
 
         </nav>
     );
+};
+
+Navbar.propTypes = {
+    loginStatus: PropTypes.bool,
+    checkLogin: PropTypes.func
 };
 
 export default Navbar

@@ -1,12 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
-const Login = () => {
+const Login = ({ loginStatus, checkLogin }) => {
     const [message, setMessage] = useState();
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (loginStatus) {
+            navigate("/")
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [loginStatus]);
 
     const {
         register,
@@ -26,8 +34,8 @@ const Login = () => {
             // Handle Success
             .then(function (response) {
                 setLoading(false);
-                setMessage(response?.data?.message)
-                localStorage.setItem("loggedIn", true)
+                setMessage(response?.data?.message);
+                checkLogin();
                 navigate("/");
             })
 
@@ -143,6 +151,11 @@ const Login = () => {
             </div>
         </div>
     )
+};
+
+Login.propTypes = {
+    loginStatus: PropTypes.bool,
+    checkLogin: PropTypes.func
 };
 
 export default Login;

@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 import uploadLogo from "./assets/upload-image.svg"
 
-const CreatePost = () => {
+const CreatePost = ({ loginStatus }) => {
     const [loading, setLoading] = useState(false);
     const [image, setImage] = useState();
     const [imageUpload, setImageUpload] = useState();
@@ -17,13 +18,11 @@ const CreatePost = () => {
     } = useForm();
     
     useEffect(() => {
-        const loggedIn = localStorage.getItem("loggedIn");
-        
-        if (!loggedIn) {
+        if (!loginStatus) {
             navigate("/login")
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [loginStatus]);
 
     // Called when the Create Post button is pressed.
     const onSubmit = (data) => {
@@ -220,5 +219,9 @@ const CreatePost = () => {
             </div>
     );
 };
+
+CreatePost.propTypes = {
+    loginStatus: PropTypes.bool
+}
 
 export default CreatePost;
