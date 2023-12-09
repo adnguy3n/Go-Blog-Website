@@ -1,5 +1,6 @@
 //import { useState } from 'react'
 import { Link } from "react-router-dom";
+import AllPosts from "./allPosts";
 
 const Home = () => {
 
@@ -35,6 +36,8 @@ const Home = () => {
           </div>
         </main>
       </div>
+
+      <AllPosts/>
     </>
   )
 }
