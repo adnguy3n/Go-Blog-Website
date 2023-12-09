@@ -15,6 +15,7 @@ const GetPost = () => {
         } else {
             getBlogPost();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const getBlogPost = () => {
