@@ -3,8 +3,9 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import uploadLogo from "./assets/upload-image.svg"
+import PropTypes from "prop-types";
 
-const CreatePost = () => {
+const CreatePost = ({ logout }) => {
     const [loading, setLoading] = useState(false);
     const [image, setImage] = useState();
     const [imageUpload, setImageUpload] = useState();
@@ -20,7 +21,7 @@ const CreatePost = () => {
         const loggedIn = localStorage.getItem("loggedIn");
 
         if (!loggedIn) {
-            navigate("/login")
+            navigate("/login");
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -77,6 +78,8 @@ const CreatePost = () => {
             // Handle error
             .catch(function (error) {
                 console.log(error);
+                navigate("/login");
+                logout();
             })
         }
     };
@@ -101,6 +104,8 @@ const CreatePost = () => {
             .catch(function (error) {
                 setLoading(false);
                 console.log(error);
+                navigate("/login");
+                logout();
             })
     }
     
@@ -215,5 +220,9 @@ const CreatePost = () => {
             </div>
     );
 };
+
+CreatePost.propTypes = {
+    logout: PropTypes.func
+}
 
 export default CreatePost;

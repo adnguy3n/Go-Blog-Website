@@ -15,28 +15,33 @@ const [loginStatus, setLoginStatus] = useState(false);
 
   useEffect(() => {
     checkLogin();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Calls backend to see if there is a valid cookie.
   function checkLogin() {
     axios
-      .get("api/checklogin", { withCredentials: true })
+      .get("api/checklogin")
       
       .then(function(response) {
         if (response?.data?.isValid) {
           localStorage.setItem("loggedIn", response?.data?.isValid);
           setLoginStatus(true);
         } else {
-          localStorage.removeItem("loggedIn");
-          setLoginStatus(false);
+          logout();
         }
       })
 
       .catch(function(error) {
         console.log(error);
-        localStorage.removeItem("loggedIn");
-        setLoginStatus(false);
+        logout();
       })
+  }
+
+  function logout() {
+    axios.get("api/logout");
+    localStorage.removeItem("loggedIn");
+    setLoginStatus(false);
   }
 
   return (
@@ -47,8 +52,8 @@ const [loginStatus, setLoginStatus] = useState(false);
             <Route exact path="/" element={<Home/>} />
             <Route exact path="/register" element={<Register/>} />
             <Route exact path="/login" element={<Login checkLogin={checkLogin}/>} />
-            <Route exact path="/createpost" element={<CreatePost/>} />
-            <Route exact path="/yourblog" element={<YourBlog/>} />
+            <Route exact path="/createpost" element={<CreatePost logout={logout}/>} />
+            <Route exact path="/yourblog" element={<YourBlog logout={logout} />} />
             <Route exact path="/getpost/:id" element={<GetPost />} />
           </Routes>
         </BrowserRouter>  

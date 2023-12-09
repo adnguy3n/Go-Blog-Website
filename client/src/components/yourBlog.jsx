@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { Link, useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
-const YourBlog = () => {
+const YourBlog = ({ logout }) => {
     const [loading, setLoading] = useState(false)
     const [blogData, setBlogData] = useState();
     const [deleteLoading, setDeleteLoading] = useState(false);
@@ -28,9 +29,6 @@ const YourBlog = () => {
                 "api/userposts",
                 {
                     withCredentials: true,
-                    headers: {
-                        Authorization: "TOKEN",
-                    }
                 }
             )
 
@@ -42,8 +40,10 @@ const YourBlog = () => {
             
             // Handle Error
             .catch(function (error) {
-                setLoading(false)
-                console.log(error?.response?.data?.message)
+                setLoading(false);
+                console.log(error?.response?.data?.message);
+                navigate("/login");
+                logout();
             });
     };
 
@@ -136,5 +136,9 @@ const YourBlog = () => {
         </>
     );
 };
+
+YourBlog.propTypes = {
+    logout: PropTypes.func
+}
 
 export default YourBlog
