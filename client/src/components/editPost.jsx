@@ -97,7 +97,7 @@ const EditPost = ({ logout }) => {
                                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                 id="grid-first-name"
                                 type="text"
-                                placeholder="title"
+                                defaultValue={blogPost?.title}
                                 name="title"
                                 autoComplete="off"
                                 {...register("title", {
@@ -115,7 +115,7 @@ const EditPost = ({ logout }) => {
                     <div className="flex flex-wrap -mx-3 items-center lg:items-start mb-6">
                         <div className="w-full px-3">
                             <div className="flex flex-col">
-                                <div className="pb-2">Upload Image</div>
+                                <div className="pb-2">Image</div>
                                     {blogPost?.image ? (
                                         <div className="pt-4">
                                             <div>
@@ -149,6 +149,7 @@ const EditPost = ({ logout }) => {
                             <textarea
                                 rows="10"
                                 name="description"
+                                defaultValue={blogPost?.description}
                                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 {...register("description", {
                                     required: true,
@@ -167,7 +168,7 @@ const EditPost = ({ logout }) => {
                                 type="submit"
                                 disabled={loading}
                             >
-                                {loading ? "Loading..." : "Create Post"}
+                                {loading ? "Loading..." : "Edit Post"}
                             </button>
                         </div>
                     </div>
