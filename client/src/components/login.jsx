@@ -4,17 +4,19 @@ import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const Login = ({ loginStatus, checkLogin }) => {
+const Login = ({ checkLogin }) => {
     const [message, setMessage] = useState();
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (loginStatus) {
+        const loggedIn = localStorage.getItem("loggedIn");
+
+        if (loggedIn) {
             navigate("/")
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loginStatus]);
+    }, []);
 
     const {
         register,
@@ -154,7 +156,6 @@ const Login = ({ loginStatus, checkLogin }) => {
 };
 
 Login.propTypes = {
-    loginStatus: PropTypes.bool,
     checkLogin: PropTypes.func
 };
 

@@ -1,22 +1,23 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { Link, useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
 
-const YourBlog = ({ loginStatus }) => {
+const YourBlog = () => {
     const [loading, setLoading] = useState(false)
     const [blogData, setBlogData] = useState();
     const [deleteLoading, setDeleteLoading] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!loginStatus) {
+        const loggedIn = localStorage.getItem("loggedIn");
+
+        if (!loggedIn) {
             navigate("/login")
         } else {
             getUserPosts();
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loginStatus]);
+    }, []);
 
     // Gets all of the posts made by the logged in user.
     const getUserPosts = () => {
@@ -135,9 +136,5 @@ const YourBlog = ({ loginStatus }) => {
         </>
     );
 };
-
-YourBlog.propTypes = {
-    loginStatus: PropTypes.bool
-}
 
 export default YourBlog

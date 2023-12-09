@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
 import uploadLogo from "./assets/upload-image.svg"
 
-const CreatePost = ({ loginStatus }) => {
+const CreatePost = () => {
     const [loading, setLoading] = useState(false);
     const [image, setImage] = useState();
     const [imageUpload, setImageUpload] = useState();
@@ -18,11 +17,13 @@ const CreatePost = ({ loginStatus }) => {
     } = useForm();
     
     useEffect(() => {
-        if (!loginStatus) {
+        const loggedIn = localStorage.getItem("loggedIn");
+
+        if (!loggedIn) {
             navigate("/login")
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loginStatus]);
+    }, []);
 
     // Called when the Create Post button is pressed.
     const onSubmit = (data) => {
@@ -118,12 +119,9 @@ const CreatePost = ({ loginStatus }) => {
                 <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex flex-wrap -mx-3 mb-6">
                         <div className="w-full md:w-full px-3 mb-6 md:mb-0">
-                            <label
-                                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                htmlFor="grid-first-name"
-                            >
+                            <div className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                                 Title
-                            </label>
+                            </div>
                             <input
                                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                 id="grid-first-name"
@@ -149,7 +147,6 @@ const CreatePost = ({ loginStatus }) => {
                                 <input
                                     accept="image/*"
                                     className="hidden"
-                                    id="banner"
                                     type="file"
                                     name="image"
                                     onChange={handleImage}
@@ -184,12 +181,11 @@ const CreatePost = ({ loginStatus }) => {
 
                     <div className="flex flex-wrap w-full -mx-3">
                         <div className="w-full px-3">
-                            <label
+                            <div
                                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                htmlFor="grid-password"
                             >
                                 Description
-                            </label>
+                            </div>
                             <textarea
                                 rows="10"
                                 name="description"
@@ -219,9 +215,5 @@ const CreatePost = ({ loginStatus }) => {
             </div>
     );
 };
-
-CreatePost.propTypes = {
-    loginStatus: PropTypes.bool
-}
 
 export default CreatePost;

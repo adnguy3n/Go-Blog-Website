@@ -10,7 +10,7 @@ import YourBlog from "./components/yourBlog";
 import Navbar from "./components/navbar";
 
 function App() {
-  const [loginStatus, setLoginStatus] = useState(false);
+const [loginStatus, setLoginStatus] = useState(false);
 
   useEffect(() => {
     checkLogin();
@@ -22,12 +22,18 @@ function App() {
       .get("api/checklogin", { withCredentials: true })
       
       .then(function(response) {
-        setLoginStatus(response?.data?.isValid);
-        console.log(response?.data?.isValid);
+        if (response?.data?.isValid) {
+          localStorage.setItem("loggedIn", response?.data?.isValid);
+          setLoginStatus(true);
+        } else {
+          localStorage.removeItem("loggedIn");
+          setLoginStatus(false);
+        }
       })
 
       .catch(function(error) {
         console.log(error);
+        localStorage.removeItem("loggedIn");
         setLoginStatus(false);
       })
   }
@@ -39,9 +45,9 @@ function App() {
           <Routes>
             <Route exact path="/" element={<Home/>} />
             <Route exact path="/register" element={<Register/>} />
-            <Route exact path="/login" element={<Login loginStatus={loginStatus} checkLogin={checkLogin}/>} />
-            <Route exact path="/createpost" element={<CreatePost loginStatus={loginStatus}/>} />
-            <Route exact path="/yourblog" element={<YourBlog loginStatus={loginStatus}/>} />
+            <Route exact path="/login" element={<Login checkLogin={checkLogin}/>} />
+            <Route exact path="/createpost" element={<CreatePost/>} />
+            <Route exact path="/yourblog" element={<YourBlog/>} />
           </Routes>
         </BrowserRouter>  
       </div>
