@@ -110,7 +110,7 @@ const YourBlog = ({ logout }) => {
                                         {blogPost?.user?.first_name} {blogPost?.user?.last_name}
                                     </p>
 
-                                    <right>
+                                    <div>
                                         <button
                                             onClick={() => deleteButton(blogPost)}
                                             disabled={loading}
@@ -124,7 +124,7 @@ const YourBlog = ({ logout }) => {
                                                 Edit
                                             </button>
                                         </Link>
-                                    </right>
+                                    </div>
                                 </footer>
                             </article>
                         </div>
