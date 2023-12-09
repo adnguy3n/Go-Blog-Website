@@ -51,7 +51,7 @@ func GetAllPosts(c *fiber.Ctx) error {
 	)
 
 	page, _ := strconv.Atoi(c.Query("page", "1"))
-	limit := 5
+	limit := 12
 	offset := (page - 1) * limit
 
 	databases.DB.Preload("Users").Offset(offset).Limit(limit).Find(&blogPost)
