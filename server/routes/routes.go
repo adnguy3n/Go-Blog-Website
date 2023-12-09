@@ -12,10 +12,10 @@ import (
 func Routes(app *fiber.App) {
 	app.Post("api/register", controller.Register)
 	app.Post("api/login", controller.Login)
+	app.Get("api/logout", controller.Logout)
 	app.Get("api/checklogin", controller.CheckLogin)
 
 	app.Use(middleware.Authenticate)
-	app.Get("api/logout", controller.Logout)
 	app.Post("api/post", controller.CreatePost)
 	app.Get("api/getAllPosts", controller.GetAllPosts)
 	app.Get("api/getPost/:post_id", controller.GetPost)
