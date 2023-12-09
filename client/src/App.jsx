@@ -9,6 +9,7 @@ import Login from "./components/login";
 import CreatePost from "./components/createPost";
 import YourBlog from "./components/yourBlog";
 import GetPost from "./components/getPost";
+import EditPost from "./components/editPost";
 
 function App() {
 const [loginStatus, setLoginStatus] = useState(false);
@@ -55,6 +56,7 @@ const [loginStatus, setLoginStatus] = useState(false);
             <Route exact path="/createpost" element={<CreatePost logout={logout}/>} />
             <Route exact path="/yourblog" element={<YourBlog logout={logout} />} />
             <Route exact path="/getpost/:post_id" element={<GetPost logout={logout} />} />
+            <Route exact path="/edit/:post_id" element={<EditPost logout={logout} />} />
           </Routes>
         </BrowserRouter>  
       </div>
