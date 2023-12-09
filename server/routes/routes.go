@@ -14,11 +14,11 @@ func Routes(app *fiber.App) {
 	app.Post("api/login", controller.Login)
 	app.Get("api/logout", controller.Logout)
 	app.Get("api/checklogin", controller.CheckLogin)
+	app.Get("api/getpost/:post_id", controller.GetPost)
+	app.Get("api/getallposts", controller.GetAllPosts)
 
 	app.Use(middleware.Authenticate)
 	app.Post("api/post", controller.CreatePost)
-	app.Get("api/getAllPosts", controller.GetAllPosts)
-	app.Get("api/getPost/:post_id", controller.GetPost)
 	app.Patch("api/update/:post_id", controller.UpdatePost)
 	app.Get("api/userposts", controller.GetUserPosts)
 	app.Delete("api/delete/:post_id", controller.DeletePost)
