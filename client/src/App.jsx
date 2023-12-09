@@ -2,12 +2,13 @@ import './App.css';
 import { useEffect, useState } from "react"
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import axios from "axios";
+import Navbar from "./components/navbar";
 import Home from "./components/home";
 import Register from "./components/register";
 import Login from "./components/login";
 import CreatePost from "./components/createPost";
 import YourBlog from "./components/yourBlog";
-import Navbar from "./components/navbar";
+import GetPost from ".components/getPost";
 
 function App() {
 const [loginStatus, setLoginStatus] = useState(false);
@@ -48,6 +49,7 @@ const [loginStatus, setLoginStatus] = useState(false);
             <Route exact path="/login" element={<Login checkLogin={checkLogin}/>} />
             <Route exact path="/createpost" element={<CreatePost/>} />
             <Route exact path="/yourblog" element={<YourBlog/>} />
+            <Route exact path="/getpost/:id" element={<GetPost />} />
           </Routes>
         </BrowserRouter>  
       </div>
