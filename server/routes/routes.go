@@ -14,7 +14,7 @@ func Routes(app *fiber.App) {
 	app.Post("api/login", controller.Login)
 
 	app.Use(middleware.Authenticate)
-	app.Post("api/logout", controller.Logout)
+	app.Get("api/logout", controller.Logout)
 	app.Post("api/post", controller.CreatePost)
 	app.Get("api/getAllPosts", controller.GetAllPosts)
 	app.Get("api/getPost/:post_id", controller.GetPost)
