@@ -73,6 +73,7 @@ const Register = () => {
                                     name = "first_name"
                                     className = "py-2 border-b-2 text-sm rounded-md pl-10 focus:outline-none w-10/12 focus:bg-white focus:text-gray-900"
                                     placeholder = "Enter your first name"
+                                    autoComplete="on"
                                     {...register("first_name", {
                                         required: true
                                     })}
@@ -108,6 +109,7 @@ const Register = () => {
                                     name = "last_name"
                                     className = "py-2 border-b-2 text-sm rounded-md pl-10 focus:outline-none w-10/12 focus:bg-white focus:text-gray-900"
                                     placeholder = "Enter your last name"
+                                    autoComplete="on"
                                     {...register("last_name", {
                                         required: true
                                     })}
@@ -143,6 +145,7 @@ const Register = () => {
                                     name = "email"
                                     className = "py-2 border-b-2 text-sm rounded-md pl-10 focus:outline-none w-10/12 focus:bg-white focus:text-gray-900"
                                     placeholder = "Enter your Email"
+                                    autoComplete="on"
                                     {...register("email", {
                                         required: true
                                     })}
@@ -178,6 +181,7 @@ const Register = () => {
                                     name = "password"
                                     className = "py-2 border-b-2 text-sm rounded-md pl-10 focus:outline-none w-10/12 focus:bg-white focus:text-gray-900"
                                     placeholder = "Enter your Password"
+                                    autoComplete="on"
                                     {...register("password", {
                                         required: true,
                                     })}
@@ -213,6 +217,7 @@ const Register = () => {
                                     name = "phone"
                                     className = "py-2 border-b-2 text-sm rounded-md pl-10 focus:outline-none w-10/12 focus:bg-white focus:text-gray-900"
                                     placeholder = "Enter your phone number."
+                                    autoComplete="on"
                                     {...register("phone", {
                                         required: true
                                     })}
