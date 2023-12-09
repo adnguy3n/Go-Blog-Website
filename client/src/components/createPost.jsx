@@ -17,6 +17,7 @@ const CreatePost = ({ logout }) => {
         formState: { errors },
     } = useForm();
     
+    // Sends user to login page if they are not logged in.
     useEffect(() => {
         const loggedIn = localStorage.getItem("loggedIn");
 
