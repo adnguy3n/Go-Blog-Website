@@ -1,0 +1,28 @@
+version: '3.8'
+
+services: 
+  #backend
+  backend:
+    build: ./server
+    ports:
+      - "3000:3000"
+    container_name: go-blog-backend
+    restart: always
+    networks:
+      - go-blog-network
+
+  #frontend
+  frontend:
+    build: ./client
+    ports:
+      - "3001:3001"
+    container_name: go-blog-frontend
+    restart: always
+    networks:
+      - go-blog-network
+    depends_on:
+      - backend
+
+networks:
+  go-blog-network:
+    name: go-blog-network
