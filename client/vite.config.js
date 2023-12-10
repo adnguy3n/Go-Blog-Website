@@ -8,7 +8,7 @@ export default defineConfig({
     host: true,
     port: 3001,
     proxy: {
-      "/api": "http://localhost:3000"
+      "/api": "http://go-blog-backend:3000"
     }
   },
 })
