@@ -2,9 +2,9 @@
 A blog website using ReactJS, Golang, and SQLite.
 
 ## Built with
-Vite
-Fiber
-GORM
+[Vite](https://vitejs.dev/)  
+[Fiber](https://docs.gofiber.io/)  
+[GORM](https://gorm.io/index.html)  
 
 ## Requirements
 
