@@ -1,13 +1,13 @@
 # Go-Blog-Website
 A blog website using ReactJS, Golang, and SQLite.
 
-##Built with
+## Built with
 Vite
 Fiber
 GORM
 
-##Requirements
+## Requirements
 
-##Running
+## Running
 
-##Usage Instructions
+## Usage Instructions
