@@ -45,25 +45,17 @@ func CreatePost(c *fiber.Ctx) error {
  * Get all Blog Post.
  */
 func GetAllPosts(c *fiber.Ctx) error {
-	var (
-		total    int64
-		blogPost []models.Post
-	)
+	var blogPost []models.Post
 
-	page, _ := strconv.Atoi(c.Query("page", "1"))
-	limit := 12
-	offset := (page - 1) * limit
-
-	databases.DB.Preload("Users").Offset(offset).Limit(limit).Find(&blogPost)
-	databases.DB.Model(&models.Post{}).Count(&total)
+	if err := databases.DB.Preload("Users").Find(&blogPost).Error; err != nil {
+		c.Status(400)
+		return c.JSON(fiber.Map{
+			"Error": err,
+		})
+	}
 
 	return c.JSON(fiber.Map{
 		"data": blogPost,
-		"meta": fiber.Map{
-			"total":     total,
-			"page":      page,
-			"last_page": float64(int(total) / limit),
-		},
 	})
 }
 
