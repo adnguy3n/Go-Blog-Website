@@ -8,7 +8,7 @@ A blog website using ReactJS, Golang, and SQLite.
 [Tailwind](https://tailwindcss.com/)  
 
 ## Requirements
-To run this application you will need to install [Node.js](https://nodejs.org/en/) and [Golang]((https://go.dev/dl/)). Additionally, [Docker](https://www.docker.com/get-started/) is recommended.
+To run this application you will need to install [Node.js](https://nodejs.org/en/) and [Golang](https://go.dev/dl/). Additionally, [Docker](https://www.docker.com/get-started/) is recommended.
 
 ## Installation and Running
 
