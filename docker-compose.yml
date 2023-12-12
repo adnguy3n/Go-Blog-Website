@@ -7,6 +7,8 @@ services:
     ports:
       - "3000:3000"
     container_name: go-blog-backend
+    volumes:
+      - go-blog:/usr/src/app/backend
     restart: always
     networks:
       - go-blog-network
@@ -22,6 +24,9 @@ services:
       - go-blog-network
     depends_on:
       - backend
+
+volumes:
+  go-blog:
 
 networks:
   go-blog-network:
