@@ -38,7 +38,7 @@ proxy: {
   "/api": "http://localhost:3000"
 }
 ```
-This is because go-blog-backend is the container name for the backend and when ran with docker, the frontend accesses the backend through its container name.  
+This is because go-blog-backend is the container name for the backend and when ran with docker, the frontend accesses the backend through its container name. If for some reason the backend's container name would change, the proxy would have to be updated to reflect that change in order for the app to work.  
     
 The backend would also have to be running with go run main.go while in the server directory.
 ```
