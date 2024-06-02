@@ -1,5 +1,5 @@
 # Go-Blog-Website
-A blog website using ReactJS, Golang, and SQLite.
+A blog website using React, Golang, and SQLite that allows users to create, edit, and delete blog posts, and upload images to those posts.
 
 ## Built with
 [Vite](https://vitejs.dev/)   
